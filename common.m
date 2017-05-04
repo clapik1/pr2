@@ -1,5 +1,5 @@
 function common(m, J, q, x1, x2, x3, fi1, fi2, fi3, qval, oldval, newval)
-    syms g qd1 qd2 qd3 qdd1 qdd2 qdd3 real
+    syms g positive
     qd = sym('qd%d', [3, 1], 'real');
     qdd = sym('qdd%d', [3, 1], 'real');
     

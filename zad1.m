@@ -1,6 +1,6 @@
 function zad1(I, N)
-    syms lc3 lc2 l2 t J2z J3x J3y J3z real
-    m = sym('m%d', [1, 3], 'real');
+    syms lc3 lc2 l2 t J2z J3x J3y J3z positive
+    m = sym('m%d', [1, 3], 'positive');
     q = sym('q%d', [3, 1], 'real');
 
     x1 = [q(1); 0; 0];
@@ -53,8 +53,10 @@ function zad1(I, N)
     Jval32(2, 2) = (m32 * l32^2) / 12;
     % nie licze Jval32(3,3), bo podobno belka pryzmatyczna ma znikomy ten trzeci moment bezwladnosci
 
-    J3val = steiner(Jval31, [0, 0, -lc3val], m31) + steiner(Jval32, [0, 0, l32/2 - lc3val], m32);
     % przesuwam obydwa tensory do srodka ciezkosci calego czlonu trzeciego
+    J3val = Jval31 + steiner([0, 0, -lc3val], m31) + Jval32 + steiner([0, 0, l32/2 - lc3val], m32);
+    display(simplify(steiner([0, 0, -lc3], sym('m31', 'positive'))))
+    display(simplify(steiner([0, 0, sym('l32', 'positive')/2 - lc3], sym('m32', 'positive'))))
 
     common(m, J, q, x1, x2, x3, fi1, fi2, fi3, qval, [t m lc3 J2z reshape(J3, [1, 9])], [tval mval lc3val J2zval reshape(J3val, [1, 9])]);
 end
