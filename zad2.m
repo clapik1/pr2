@@ -1,27 +1,31 @@
 function zad2(I, N)
-    syms a b l3 t J1z J2xyz J3yz J3z positive
+    syms a b l3 t J1z J2x J3y J3z positive
     m = sym('m%d', [1, 3], 'positive');
     q = sym('q%d', [3, 1], 'real');
 
     x1 = [0; 0; 0];
     x2 = [0; 0; b];
     x3 = [-a*sin(q(1))+q(3)*cos(q(2))*cos(q(1)); a*cos(q(1))+q(3)*cos(q(2))*sin(q(1)); b-q(3)*sin(q(2))];
-    fi1 = [0; 0; q(1)];
-    fi2 = [-q(2)*sin(q(1)); q(2)*cos(q(1)); q(1)];
-    fi3 = fi2;
+    Jo1 = sym(zeros(3));
+    Jo1(3, 1) = 1;
+    Jo2 = sym(zeros(3));
+    Jo2(1, 2) = -sin(q(1));
+    Jo2(2, 2) = cos(q(1));
+    Jo2(3, 1) = 1;
+    Jo3 = Jo2;
 
     J = sym(zeros(3, 3, 3));
     J(3, 3, 1) = J1z;
     
     J2 = sym(zeros(3, 3));
-    J2(1, 1) = J2xyz;
-    J2(2, 2) = J2xyz;
-    J2(3, 3) = J2xyz;
+    J2(1, 1) = J2x;
+    J2(2, 2) = J2x;
+    J2(3, 3) = J2x;
     R01 = [cos(q(1)), -sin(q(1)), 0; sin(q(1)), cos(q(1)), 0; 0, 0, 1];
     J(:, :, 2) = R01 * J2 * R01';
     
-    J3(2, 2) = J3yz;
-    J3(3, 3) = J3yz;
+    J3(2, 2) = J3y;
+    J3(3, 3) = J3y;
     % pomijam J3(1, 1), bo podobno belka pryzmatyczna ma znikomy ten trzeci moment bezwladnosci
     R02 = R01 * [cos(q(2)), 0, sin(q(2)); 0, 1, 0; -sin(q(2)), 0, cos(q(2))];
     J(:, :, 3) = R02 * J3 * R02';
@@ -39,7 +43,7 @@ function zad2(I, N)
 
     aval = 0.09;
     m2 = 1.8;
-    J2xyzval = 0.35;
+    J2xval = 0.35;
 
     m3 = 2;
     l3val = 0.4; % wybralem losowo ten z dolu strony
@@ -48,7 +52,7 @@ function zad2(I, N)
     tval = h;
     mval = [m1 m2 m3];
 
-    J3yzval = (m3 * l3val^2) / 12;
+    J3yval = (m3 * l3val^2) / 12;
 
-    common(m, J, q, x1, x2, x3, fi1, fi2, fi3, qval, [t m l3 a J1z J2xyz J3yz], [tval mval l3val aval J1zval J2xyzval J3yzval]);
+    common(m, J, q, x1, x2, x3, Jo1, Jo2, Jo3, qval, [t m l3 a J1z J2x J3y], [tval mval l3val aval J1zval J2xval J3yval]);
 end

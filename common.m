@@ -1,4 +1,4 @@
-function common(m, J, q, x1, x2, x3, fi1, fi2, fi3, qval, oldval, newval)
+function common(m, J, q, x1, x2, x3, Jo1, Jo2, Jo3, qval, oldval, newval)
     syms g positive
     qd = sym('qd%d', [3, 1], 'real');
     qdd = sym('qdd%d', [3, 1], 'real');
@@ -9,12 +9,6 @@ function common(m, J, q, x1, x2, x3, fi1, fi2, fi3, qval, oldval, newval)
     display(Jv2)
     Jv3 = jacobian(x3, q);
     display(Jv3)
-    Jo1 = jacobian(fi1, q);
-    display(Jo1)
-    Jo2 = jacobian(fi2, q);
-    display(Jo2)
-    Jo3 = jacobian(fi3, q);
-    display(Jo3)
     
     D = m(1) * (Jv1'*Jv1) + m(2) * (Jv2'*Jv2) + m(3) * (Jv3'*Jv3) +  Jo1'*J(:,:,1)*Jo1 + Jo2'*J(:,:,2)*Jo2 + Jo3'*J(:,:,3)*Jo3;
 
@@ -39,10 +33,10 @@ function common(m, J, q, x1, x2, x3, fi1, fi2, fi3, qval, oldval, newval)
         end
     end
     
-    D = simplify(D);
-    C = simplify(C);
-    V = simplify(V);
-    f = simplify(f, 'Steps', 200);
+    D = simplify(D, 'Steps', 500);
+    C = simplify(C, 'Steps', 500);
+    V = simplify(V, 'Steps', 500);
+    f = simplify(f, 'Steps', 500);
     display(D)
     display(C)
     display(V)

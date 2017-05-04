@@ -6,9 +6,13 @@ function zad1(I, N)
     x1 = [q(1); 0; 0];
     x2 = [q(1); 0; -lc2];
     x3 = [q(1)+lc3*sin(q(3))*cos(q(2)); lc3*sin(q(3))*sin(q(2)); -l2-lc3*cos(q(3))];
-    fi1 = [0; 0; 0];
-    fi2 = [0; 0; q(2)];
-    fi3 = [q(3)*sin(q(2)); -q(3)*cos(q(2)); q(2)];
+    Jo1 = sym(zeros(3));
+    Jo2 = sym(zeros(3));
+    Jo2(3, 2) = 1;
+    Jo3 = sym(zeros(3));
+    Jo3(1, 3) = sin(q(2));
+    Jo3(2, 3) = -cos(q(2));
+    Jo3(3, 2) = 1;
 
     J = sym(zeros(3, 3, 3));
     J(3, 3, 2) = J2z;
@@ -58,5 +62,5 @@ function zad1(I, N)
     display(simplify(steiner([0, 0, -lc3], sym('m31', 'positive'))))
     display(simplify(steiner([0, 0, sym('l32', 'positive')/2 - lc3], sym('m32', 'positive'))))
 
-    common(m, J, q, x1, x2, x3, fi1, fi2, fi3, qval, [t m lc3 J2z reshape(J3, [1, 9])], [tval mval lc3val J2zval reshape(J3val, [1, 9])]);
+    common(m, J, q, x1, x2, x3, Jo1, Jo2, Jo3, qval, [t m lc3 J2z reshape(J3, [1, 9])], [tval mval lc3val J2zval reshape(J3val, [1, 9])]);
 end
